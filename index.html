@@ -152,7 +152,7 @@
             /* Static Blue Border */
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             margin-bottom: 2rem;
-            background: #1e293b url('https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400') center/cover no-repeat;
+            background: #1e293b url('assets/img/rodrigo-foto.png') center/cover no-repeat;
             position: relative;
             z-index: 2;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -357,7 +357,6 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0.5;
             transition: transform 0.6s ease;
         }
 
@@ -448,6 +447,10 @@
             letter-spacing: 0.05em;
         }
 
+        .tag-gold {
+            color: var(--electric-gold);
+        }
+
         .tag-green {
             color: var(--electric-green);
         }
@@ -486,6 +489,10 @@
             gap: 10px;
         }
 
+        .icon-gold svg {
+            fill: var(--electric-gold);
+        }
+
         .icon-green svg {
             fill: var(--electric-green);
         }
@@ -498,34 +505,20 @@
             fill: var(--electric-purple);
         }
 
-        /* REAL IMAGES (Unsplash) */
-        /* 
-           NOTE FOR GOOGLE DRIVE IMAGES:
-           To use a Google Drive image, you must use a 'direct link'.
-           1. Get the Shareable Link (Anyone with link).
-           2. Extract the ID (part after /d/ and before /view).
-           3. Use format: https://drive.google.com/uc?export=view&id=YOUR_ID
-           
-           Example: background-image: url('https://drive.google.com/uc?export=view&id=12345ABCDE...');
-        */
         .img-cert-1 {
-            background-image: url('https://images.unsplash.com/photo-1621252179027-94459d27d3ee?auto=format&fit=crop&q=80&w=800');
-            /* Harvard Square/Building */
+            background-image: url('assets/img/upaep.png');
         }
 
         .img-cert-2 {
-            background-image: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800');
-            /* Modern Hospital */
+            background-image: url('assets/img/especialidad.png');
         }
 
         .img-cert-3 {
-            background-image: url('https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=800');
-            /* High Tech/Leadership */
+            background-image: url('assets/img/catedra.png');
         }
 
         .img-cert-4 {
-            background-image: url('https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80&w=800');
-            /* Research */
+            background-image: url('assets/img/atro.png');
         }
 
 
@@ -733,28 +726,26 @@
 
     <!-- Carousel Section (Refined: 2 visible + peek) -->
     <section class="carousel-section">
-        <h2 class="section-title highlight-reveal">Trayectoria & Autoridad</h2>
+        <h2 class="section-title highlight-reveal">Trayectoria Profesional</h2>
         <div class="swiper swiper-container-visuals highlight-reveal">
             <div class="swiper-wrapper">
 
                 <!-- Card 1: Harvard -->
                 <div class="swiper-slide">
-                    <div class="card-bg-image img-cert-1"></div>
+                    <div class="card-bg-image opacity-50 img-cert-1"></div>
                     <div class="card-overlay"></div>
                     <div class="card-content">
                         <div class="card-header-row">
-                            <div class="card-icon-box icon-green">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-                                </svg>
+                            <div class="card-icon-box icon-gold">
+                                <i class="fa-solid fa-graduation-cap fa-xl" style="color: var(--electric-gold);"></i>
                             </div>
                             <div class="card-title-group">
-                                <h3 class="card-title">Harvard Medical</h3>
-                                <span class="card-tag tag-green">CERTIFICACIÓN ÉLITE</span>
+                                <h3 class="card-title">UPAEP</h3>
+                                <span class="card-tag tag-gold">ALTO RENDIMIENTO ACADÉMICO</span>
                             </div>
                         </div>
-                        <p class="card-desc">Posgrado en Medicina de Estilo de Vida y Longevidad. Formación académica en
-                            la institución más prestigiosa del mundo.</p>
+                        <p class="card-desc">Formación como parte del Grupo Piloto, programa selectivo con práctica
+                            clínica hospitalaria desde la etapa universitaria.</p>
                     </div>
                 </div>
 
@@ -765,18 +756,15 @@
                     <div class="card-content">
                         <div class="card-header-row">
                             <div class="card-icon-box icon-purple">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path
-                                        d="M19 3H5c-1.1 0-1.99.9-1.99 2L3 19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z" />
-                                </svg>
+                                <i class="fa-solid fa-staff-snake fa-xl" style="color: var(--electric-purple);"></i>
                             </div>
                             <div class="card-title-group">
-                                <h3 class="card-title">Mayo Clinic</h3>
-                                <span class="card-tag tag-purple">FELLOWSHIP CLÍNICO</span>
+                                <h3 class="card-title">Traumatología y Ortopedia</h3>
+                                <span class="card-tag tag-purple">ESPECIALIDAD MÉDICA</span>
                             </div>
                         </div>
-                        <p class="card-desc">Entrenamiento clínico avanzado. Aplicación de protocolos de medicina
-                            interna de alto nivel.</p>
+                        <p class="card-desc">Formación especializada en el IMSS, con práctica clínica en diagnóstico y
+                            tratamiento de lesiones óseas y articulares.</p>
                     </div>
                 </div>
 
@@ -787,39 +775,34 @@
                     <div class="card-content">
                         <div class="card-header-row">
                             <div class="card-icon-box icon-cyan">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path
-                                        d="M9.19 6.35c-2.04 2.29-3.44 5.58-3.57 5.89L2 10.69l4.05-4.05c.47-.47 1.15-.68 1.81-.55zM11.17 17s3.74-1.55 5.89-3.7c5.4-5.4 4.5-9.62 4.21-10.57-.95-.3-5.17-1.19-10.57 4.21C8.55 9.09 7 12.83 7 12.83L11.17 17zm6.48-2.19c.31-.13 3.6-1.53 5.89-3.57L19.31 22l-4.05-4.05c.47.66 1.25.86 1.91.39z" />
-                                </svg>
+                                <i class="fa-solid fa-book-medical fa-xl" style="color: var(--electric-cyan);"></i>
                             </div>
                             <div class="card-title-group">
-                                <h3 class="card-title">Pionero LATAM</h3>
-                                <span class="card-tag tag-cyan">LIDERAZGO REGIONAL</span>
+                                <h3 class="card-title">Docencia en Especialidad</h3>
+                                <span class="card-tag tag-cyan">CATEDRÁTICO</span>
                             </div>
                         </div>
-                        <p class="card-desc">Fundador de la primera plataforma integral de medicina de precisión y
-                            longevidad en América Latina.</p>
+                        <p class="card-desc">Actividad académica como catedrático en el desarrollo de tesis dentro del
+                            programa de especialidad médica.</p>
                     </div>
                 </div>
 
                 <!-- Add more duplicates for Loop smoothness if needed, or Swiper handles loop -->
                 <div class="swiper-slide">
-                    <div class="card-bg-image img-cert-4"></div>
+                    <div class="card-bg-image opacity-50 img-cert-4"></div>
                     <div class="card-overlay"></div>
                     <div class="card-content">
                         <div class="card-header-row">
                             <div class="card-icon-box icon-green">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z" />
-                                </svg>
+                                <i class="fa-solid fa-microscope fa-xl" style="color: var(--electric-green);"></i>
                             </div>
                             <div class="card-title-group">
-                                <h3 class="card-title">Investigación</h3>
-                                <span class="card-tag tag-green">CIENCIA APLICADA</span>
+                                <h3 class="card-title">Artroscopía y Cirugía Mínimamente Invasiva</h3>
+                                <span class="card-tag tag-green">SUBESPECIALIDAD EN CURSO</span>
                             </div>
                         </div>
-                        <p class="card-desc">Desarrollo de nuevas técnicas quirúrgicas y publicaciones en revistas de
-                            alto impacto internacional.</p>
+                        <p class="card-desc">Formación avanzada en técnicas quirúrgicas asistidas por cámara para el
+                            tratamiento de patología articular.</p>
                     </div>
                 </div>
 
