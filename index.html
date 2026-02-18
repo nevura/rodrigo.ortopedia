@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Calendly -->
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 
     <style>
@@ -670,13 +671,23 @@
             /* Calendar Fix for Mobile */
             .booking-widget-right {
                 padding: 0;
-                height: 1500px;
-                /* Extended height for full month view */
+                height: auto !important;
+                /* Allow JS to set height */
+                min-height: 600px;
+                flex: none;
+                display: block;
+                overflow: hidden;
+            }
+
+            .calendly-inline-widget {
+                height: 600px !important;
+                /* Initial height, JS will update */
             }
 
             .booking-widget-right iframe {
                 height: 100% !important;
                 width: 100% !important;
+                min-height: 600px !important;
             }
         }
     </style>
@@ -711,15 +722,15 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <h3>10+</h3>
-                <span>Años de Experiencia</span>
+                <span>Años de Experiencia Clínica</span>
             </div>
             <div class="stat-card">
-                <h3>Top 1%</h3>
-                <span>Medico Especialista</span>
+                <h3>+5,000</h3>
+                <span>Procedimientos Realizados</span>
             </div>
             <div class="stat-card">
-                <h3>100%</h3>
-                <span>Atención Personalizada</span>
+                <h3>Certificación</h3>
+                <span>Cédula Profesional y Consejo Vigentes</span>
             </div>
         </div>
     </section>
@@ -830,7 +841,7 @@
             <div class="booking-widget-right">
                 <div class="calendly-inline-widget"
                     data-url="https://calendly.com/nevura-solutions/30min?hide_event_type_details=1&hide_gdpr_banner=1&background_color=0b101b&text_color=ffffff&primary_color=06b6d4"
-                    style="min-width:320px;height:100%;width:100%;"></div>
+                    style="min-width:320px;height:100%;width:100%;" data-resize="true"></div>
                 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"
                     async></script>
             </div>
