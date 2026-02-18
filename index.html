@@ -587,7 +587,8 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             height: 600px;
             /* Fixed height container */
-            overflow: hidden;
+            overflow-y: auto;
+            /* Enable vertical scrolling */
         }
 
         footer {
@@ -632,7 +633,7 @@
 
         @media (max-width: 768px) {
             nav {
-                padding: 0.8rem 5%;
+                padding: 1.5rem 5%;
             }
 
             .logo {
@@ -671,12 +672,14 @@
             /* Calendar Fix for Mobile */
             .booking-widget-right {
                 padding: 0;
-                height: auto !important;
-                /* Allow JS to set height */
+                height: 600px !important;
+                /* Fixed height per user request */
                 min-height: 600px;
                 flex: none;
                 display: block;
-                overflow: hidden;
+                overflow-y: auto !important;
+                /* Enable scrolling */
+                -webkit-overflow-scrolling: touch;
             }
 
             .calendly-inline-widget {
