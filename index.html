@@ -110,7 +110,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 4%;
+            padding: 1.5rem 4%;
             background: rgba(5, 10, 20, 0.9);
             backdrop-filter: blur(12px);
             position: fixed;
@@ -473,7 +473,7 @@
         /* --- Photo / Story section (near-black, editorial) --- */
         .story-section {
             background: var(--bg-black);
-            padding: 5.5rem 6%;
+            padding: 2.5rem 6%;
         }
 
         .story-header {
@@ -511,6 +511,23 @@
             grid-template-columns: 1fr;
             gap: 1.75rem;
             align-items: center;
+        }
+
+        /* Soft divider between trayectoria entries, centered in the .story-list
+           gap so it doesn't need its own margin/spacing — marks where one
+           stage ends and the next begins without adding a hard rule. */
+        .story-row+.story-row {
+            position: relative;
+        }
+
+        .story-row+.story-row::before {
+            content: '';
+            position: absolute;
+            top: -2rem;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
         }
 
         /* Connecting line is desktop-only (doesn't make sense in a stacked
@@ -677,6 +694,13 @@
             background: var(--bg-band);
             padding: 1.75rem 0;
             color: var(--ink);
+            /* .hero has an explicit z-index (for its own glow/blob layering)
+               and, since a prior fix, no longer clips its own bleed
+               vertically — without its own stacking context this band's
+               background could lose the paint order to that bleed and look
+               like it's rendering under the hero instead of below it. */
+            position: relative;
+            z-index: 2;
         }
 
         .brands-band .band-label {
@@ -698,7 +722,7 @@
         .brands-track {
             display: flex;
             width: max-content;
-            animation: marquee-scroll 30s linear infinite;
+            animation: marquee-scroll 50s linear infinite;
         }
 
         .brands-list {
@@ -724,8 +748,8 @@
             animation-play-state: paused;
         }
 
-        /* Logo-first: the mark (icon placeholder today, <img> once real logos
-           land) is the dominant element; the caption is a small secondary label. */
+        /* Logo-first: the mark (the real <img> logo) is the dominant
+           element; the caption is a small secondary label. */
         .brand-item {
             display: flex;
             flex-direction: column;
@@ -738,32 +762,28 @@
             align-items: center;
             justify-content: center;
             height: 44px;
-            gap: 0.6rem;
-            font-weight: 700;
-            letter-spacing: 0.03em;
-            text-transform: uppercase;
-            white-space: nowrap;
-            font-size: 1.15rem;
-            color: #333d4d;
-            filter: grayscale(1);
-            opacity: 0.65;
-            transition: opacity 0.3s, filter 0.3s, color 0.3s;
         }
 
-        /* When real logos are uploaded to assets/img/brand-logos/, swap the
-           placeholder <i>+text inside .brand-mark for:
-           <img src="assets/img/brand-logos/xxx.webp" alt="Xxx"
-                style="height:100%; width:auto; object-fit:contain;">
-           — same 44px-tall box, logo becomes the actual dominant element. */
+        /* Logos come from very different source palettes (a hospital blue,
+           a government seal, etc.) — grayscale(1) strips the hue from each
+           one so they all read as the same "color" at rest instead of a
+           rainbow of institutional colors, while keeping the luminance
+           contrast between their internal opaque shapes intact (several of
+           these logos draw their inner detail — letterforms, iconography —
+           with opaque white/light layers rather than real alpha cutouts;
+           brightness(0) collapsed all of that to solid black and destroyed
+           the detail, which grayscale(1) doesn't do). */
+        .brand-mark img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            filter: grayscale(1) opacity(0.6);
+            transition: filter 0.3s, opacity 0.3s;
+        }
 
-        .brand-item:hover .brand-mark {
-            filter: grayscale(0);
+        .brand-item:hover .brand-mark img {
+            filter: none;
             opacity: 1;
-            color: var(--accent-deep);
-        }
-
-        .brand-mark i {
-            font-size: 1.8rem;
         }
 
         .brand-caption {
@@ -776,7 +796,7 @@
 
         /* --- Split Booking Section --- */
         .booking-section {
-            padding: 4rem 5%;
+            padding: 2.5rem 5%;
             background: transparent;
             position: relative;
             max-width: 1400px;
@@ -1053,7 +1073,7 @@
 
             .logo {
                 font-size: 0.85rem;
-                max-width: 52%;
+                max-width: 70%;
                 line-height: 1.2;
             }
 
@@ -1072,7 +1092,7 @@
                a full-screen box, which left a big empty gap above the photo. */
             .hero {
                 min-height: auto;
-                padding: 1rem 5% 2rem;
+                padding: 2rem 5% 2rem;
             }
 
             .hero-grid {
@@ -1130,25 +1150,43 @@
                 font-size: 1.5rem;
             }
 
-            .story-photo {
-                justify-self: center;
-                margin-inline: auto;
+            /* Line + number share row 2 of the grid (instead of being
+               eyeballed with negative margins, the same lesson already
+               applied to the desktop 3-column layout above) so the number
+               is exactly vertically centered on the line regardless of
+               either element's exact box height. */
+            .story-row {
+                grid-template-rows: auto auto auto;
             }
 
-            /* Horizontal echo of the desktop connecting line: a short bar
-               centered between photo and card, with the number badge
-               overlapping it (pulled up via negative margin), filling its
-               width instead of its height when it scrolls into view. */
+            .story-photo {
+                grid-row: 1;
+                grid-column: 1;
+                justify-self: stretch;
+                margin-inline: auto;
+                max-width: none;
+                width: 100%;
+                box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+            }
+
+            /* Horizontal echo of the desktop connecting line: a bar spanning
+               most of the row's width, centered between photo and card,
+               with the number badge centered on top of it, filling its
+               width instead of its height when it scrolls into view.
+               Both this and .story-num share grid-row AND grid-column
+               explicitly — without an explicit column on both, CSS Grid's
+               auto-placement doesn't overlap same-row items, it creates a
+               new implicit column for the second one instead, which is
+               what silently turned this into a two-column layout before. */
             .story-line-seg {
                 display: block;
-                width: 70%;
-                max-width: 180px;
+                grid-row: 2;
+                grid-column: 1;
+                justify-self: center;
+                align-self: center;
+                width: 95%;
+                max-width: 360px;
                 height: 2px;
-                /* .story-row's own grid `gap:1.75rem` already inserts 28px
-                   before this item; these negative margins pull it back in
-                   to land the desired ~20px gap from the photo, and pull
-                   the number (next sibling) up to overlap the line. */
-                margin: -8px auto 0;
                 background: rgba(255, 255, 255, 0.08);
                 position: relative;
             }
@@ -1169,9 +1207,16 @@
             }
 
             .story-num {
-                margin: -50px auto -8px;
+                grid-row: 2;
+                grid-column: 1;
+                justify-self: center;
+                align-self: center;
                 position: relative;
                 z-index: 2;
+            }
+
+            .story-copy {
+                grid-row: 3;
             }
 
             /* Stats: force a single row — the clamp()'s own floor (115px)
@@ -1205,9 +1250,9 @@
             }
 
             .booking-step .step-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 0.8rem;
+                width: 65px;
+                height: 65px;
+                font-size: 2rem;
             }
 
             .booking-step .step-text strong {
@@ -1376,57 +1421,129 @@
             <div class="brands-track">
                 <ul class="brands-list">
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i> UPAEP</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/upaep.webp" alt="UPAEP" width="178"
+                                height="44"></span>
                         <span class="brand-caption">Formación</span>
                     </li>
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-staff-snake"></i> IMSS</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/imss.webp" alt="IMSS" width="35"
+                                height="44"></span>
+                        <span class="brand-caption">Residencia y Subespecialidad</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/secretaria-salud-puebla.webp"
+                                alt="Secretaría de Salud de Puebla" width="74" height="44"></span>
+                        <span class="brand-caption">Formación Clínica</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/gea-hospital.svg" alt="GEA" width="83"
+                                height="44"></span>
+                        <span class="brand-caption">Internado y Servicio</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/arbol-traumatologia.webp"
+                                alt="Árbol Traumatología" width="34" height="44"></span>
                         <span class="brand-caption">Especialidad</span>
                     </li>
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-calendar-check"></i> Doctoralia</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/doctoralia.webp" alt="Doctoralia"
+                                width="46" height="44"></span>
                         <span class="brand-caption">Reservas Online</span>
                     </li>
                 </ul>
                 <ul class="brands-list" aria-hidden="true">
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i> UPAEP</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/upaep.webp" alt="" width="178"
+                                height="44"></span>
                         <span class="brand-caption">Formación</span>
                     </li>
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-staff-snake"></i> IMSS</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/imss.webp" alt="" width="35"
+                                height="44"></span>
+                        <span class="brand-caption">Residencia y Subespecialidad</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/secretaria-salud-puebla.webp" alt=""
+                                width="74" height="44"></span>
+                        <span class="brand-caption">Formación Clínica</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/gea-hospital.svg" alt="" width="83"
+                                height="44"></span>
+                        <span class="brand-caption">Internado y Servicio</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/arbol-traumatologia.webp" alt=""
+                                width="34" height="44"></span>
                         <span class="brand-caption">Especialidad</span>
                     </li>
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-calendar-check"></i> Doctoralia</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/doctoralia.webp" alt="" width="46"
+                                height="44"></span>
                         <span class="brand-caption">Reservas Online</span>
                     </li>
                 </ul>
                 <ul class="brands-list" aria-hidden="true">
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i> UPAEP</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/upaep.webp" alt="" width="178"
+                                height="44"></span>
                         <span class="brand-caption">Formación</span>
                     </li>
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-staff-snake"></i> IMSS</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/imss.webp" alt="" width="35"
+                                height="44"></span>
+                        <span class="brand-caption">Residencia y Subespecialidad</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/secretaria-salud-puebla.webp" alt=""
+                                width="74" height="44"></span>
+                        <span class="brand-caption">Formación Clínica</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/gea-hospital.svg" alt="" width="83"
+                                height="44"></span>
+                        <span class="brand-caption">Internado y Servicio</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/arbol-traumatologia.webp" alt=""
+                                width="34" height="44"></span>
                         <span class="brand-caption">Especialidad</span>
                     </li>
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-calendar-check"></i> Doctoralia</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/doctoralia.webp" alt="" width="46"
+                                height="44"></span>
                         <span class="brand-caption">Reservas Online</span>
                     </li>
                 </ul>
                 <ul class="brands-list" aria-hidden="true">
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i> UPAEP</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/upaep.webp" alt="" width="178"
+                                height="44"></span>
                         <span class="brand-caption">Formación</span>
                     </li>
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-staff-snake"></i> IMSS</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/imss.webp" alt="" width="35"
+                                height="44"></span>
+                        <span class="brand-caption">Residencia y Subespecialidad</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/secretaria-salud-puebla.webp" alt=""
+                                width="74" height="44"></span>
+                        <span class="brand-caption">Formación Clínica</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/gea-hospital.svg" alt="" width="83"
+                                height="44"></span>
+                        <span class="brand-caption">Internado y Servicio</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><img src="assets/img/brand-logos/arbol-traumatologia.webp" alt=""
+                                width="34" height="44"></span>
                         <span class="brand-caption">Especialidad</span>
                     </li>
                     <li class="brand-item">
-                        <span class="brand-mark"><i class="fa-solid fa-calendar-check"></i> Doctoralia</span>
+                        <span class="brand-mark"><img src="assets/img/brand-logos/doctoralia.webp" alt="" width="46"
+                                height="44"></span>
                         <span class="brand-caption">Reservas Online</span>
                     </li>
                 </ul>
@@ -1513,13 +1630,6 @@
                 <div class="booking-signature">
                     <p>Elige el horario que más te acomode y cuéntanos brevemente el motivo de tu consulta.</p>
                 </div>
-                <a class="booking-address"
-                    href="https://www.google.com/maps/search/?api=1&query=Avenida+Lomas+Verdes+2165%2C+Naucalpan+de+Ju%C3%A1rez%2C+Hospital+Star+Medica+Lomas+Verdes"
-                    target="_blank" rel="noopener">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <span>Avenida Lomas Verdes 2165, Naucalpan de Juárez &middot; Hospital Star Medica Lomas Verdes,
-                        Piso 11, Suite 4</span>
-                </a>
                 <div class="booking-steps">
                     <div class="booking-step highlight-reveal">
                         <span class="step-icon"><i class="fa-regular fa-calendar-check"></i></span>
@@ -1543,6 +1653,13 @@
                         </span>
                     </div>
                 </div>
+                <a class="booking-address"
+                    href="https://www.google.com/maps/search/?api=1&query=Avenida+Lomas+Verdes+2165%2C+Naucalpan+de+Ju%C3%A1rez%2C+Hospital+Star+Medica+Lomas+Verdes"
+                    target="_blank" rel="noopener">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Avenida Lomas Verdes 2165, Naucalpan de Juárez &middot; Hospital Star Medica Lomas Verdes,
+                        Piso 11, Suite 4</span>
+                </a>
             </div>
 
             <div class="booking-socials">
@@ -1626,6 +1743,11 @@
         }
 
         // --- Reveal ---
+        const heroEl = document.querySelector('.hero.highlight-reveal');
+        const restEls = document.querySelectorAll('.highlight-reveal:not(.hero)');
+
+        if (heroEl) heroEl.classList.add('in-view');
+
         if ('IntersectionObserver' in window) {
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -1638,9 +1760,23 @@
                 });
             }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
 
-            document.querySelectorAll('.highlight-reveal').forEach(el => revealObserver.observe(el));
+            // On short mobile heroes the next section can already sit inside
+            // the initial viewport, so observing right away would resolve
+            // its reveal before the user ever scrolls (it just "pops in"
+            // instead of animating in response to the scroll that's meant
+            // to trigger it). Arming on the first real scroll ties the
+            // animation to an actual scroll gesture; the fallback timeout
+            // keeps it from staying hidden if that gesture never happens.
+            let armed = false;
+            const arm = () => {
+                if (armed) return;
+                armed = true;
+                restEls.forEach(el => revealObserver.observe(el));
+            };
+            window.addEventListener('scroll', arm, { once: true, passive: true });
+            setTimeout(arm, 1200);
         } else {
-            document.querySelectorAll('.highlight-reveal').forEach(el => el.classList.add('in-view'));
+            restEls.forEach(el => el.classList.add('in-view'));
             document.querySelectorAll('[data-count-to]').forEach(animateCount);
         }
     </script>
