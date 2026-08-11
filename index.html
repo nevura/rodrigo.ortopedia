@@ -743,9 +743,17 @@
             }
         }
 
-        .brands-marquee:hover .brands-track,
         .brands-track:focus-within {
             animation-play-state: paused;
+        }
+
+        /* Scoped to real hover-capable pointers only — on touch, a tap
+           simulates :hover with no "un-hover" event to end it, so the
+           pause-on-hover would stick the marquee frozen after the first tap. */
+        @media (hover: hover) {
+            .brands-marquee:hover .brands-track {
+                animation-play-state: paused;
+            }
         }
 
         /* Logo-first: the mark (the real <img> logo) is the dominant
@@ -1743,12 +1751,25 @@
         }
 
         // --- Reveal ---
-        const heroEl = document.querySelector('.hero.highlight-reveal');
-        const restEls = document.querySelectorAll('.highlight-reveal:not(.hero)');
+        // Anything already inside the initial viewport at load (which, on
+        // short mobile heroes, can include sections below the hero too, not
+        // just the hero itself) gets marked in-view immediately instead of
+        // waiting for a scroll — otherwise the IntersectionObserver below
+        // would resolve it as intersecting on its very first check anyway,
+        // just delayed until whenever the user happens to scroll, which
+        // reads as the section popping in out of nowhere instead of ever
+        // really animating.
+        const revealEls = document.querySelectorAll('.highlight-reveal');
+        const toObserve = [];
+        revealEls.forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+                el.classList.add('in-view');
+            } else {
+                toObserve.push(el);
+            }
+        });
 
-        if (heroEl) heroEl.classList.add('in-view');
-
-        if ('IntersectionObserver' in window) {
+        if ('IntersectionObserver' in window && toObserve.length) {
             const revealObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1760,25 +1781,13 @@
                 });
             }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
 
-            // On short mobile heroes the next section can already sit inside
-            // the initial viewport, so observing right away would resolve
-            // its reveal before the user ever scrolls (it just "pops in"
-            // instead of animating in response to the scroll that's meant
-            // to trigger it). Arming on the first real scroll ties the
-            // animation to an actual scroll gesture; the fallback timeout
-            // keeps it from staying hidden if that gesture never happens.
-            let armed = false;
-            const arm = () => {
-                if (armed) return;
-                armed = true;
-                restEls.forEach(el => revealObserver.observe(el));
-            };
-            window.addEventListener('scroll', arm, { once: true, passive: true });
-            setTimeout(arm, 1200);
+            toObserve.forEach(el => revealObserver.observe(el));
         } else {
-            restEls.forEach(el => el.classList.add('in-view'));
-            document.querySelectorAll('[data-count-to]').forEach(animateCount);
+            toObserve.forEach(el => el.classList.add('in-view'));
         }
+        document.querySelectorAll('[data-count-to]').forEach(counter => {
+            if (counter.closest('.in-view')) animateCount(counter);
+        });
     </script>
 </body>
 
