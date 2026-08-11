@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concepto 3 — Warm Human Precision</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-navy: #1a2233;
+            --bg-paper: #faf3e9;
+            --bg-terracotta: #3a2a22;
+            --ink: #2b2620;
+            --text-on-dark: #f5f0e6;
+            --text-muted-dark: #a8a49c;
+            --text-muted-light: #7c7368;
+            --warm-accent: #e08a52;
+            --warm-accent-deep: #c96f3e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-navy);
+            color: var(--text-on-dark);
+            overflow-x: hidden;
+        }
+
+        .scope-ribbon {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: var(--ink);
+            color: #cfc7ba;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.6rem;
+        }
+
+        .scope-ribbon strong {
+            color: var(--warm-accent);
+        }
+
+        /* --- Hero (dark navy) --- */
+        .hero {
+            min-height: 92vh;
+            padding: 7rem 6% 4rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--bg-navy);
+        }
+
+        .hero-warm {
+            display: grid;
+            grid-template-areas: "portrait" "text";
+            gap: 3rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-warm {
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas: "text portrait";
+                align-items: center;
+                text-align: left;
+                gap: 4rem;
+            }
+
+            .hero-chips {
+                justify-content: flex-start;
+            }
+        }
+
+        .hero-text {
+            grid-area: text;
+        }
+
+        .hero-name {
+            display: block;
+            font-size: 1rem;
+            color: var(--warm-accent);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-weight: 600;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-text p {
+            color: var(--text-muted-dark);
+            font-size: 1.2rem;
+            max-width: 550px;
+            margin: 0 auto 2rem;
+            font-weight: 300;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-text p {
+                margin-left: 0;
+            }
+        }
+
+        .hero-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.65rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-chip {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.55rem 1.1rem;
+            border-radius: 50px;
+            background: rgba(224, 138, 82, 0.12);
+            border: 1px solid rgba(224, 138, 82, 0.35);
+            color: var(--warm-accent);
+        }
+
+        .btn-warm {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--warm-accent-deep), var(--warm-accent));
+            color: #241a12;
+            padding: 17px 42px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-size: 0.88rem;
+            box-shadow: 0 10px 30px rgba(224, 138, 82, 0.35);
+        }
+
+        .hero-portrait-wrap {
+            grid-area: portrait;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-img-frame {
+            width: clamp(260px, 32vw, 420px);
+            aspect-ratio: 1 / 1;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(224, 138, 82, 0.5);
+            border-radius: 62% 38% 55% 45% / 45% 55% 45% 55%;
+            animation: blob-morph 14s ease-in-out infinite alternate;
+            isolation: isolate;
+        }
+
+        @keyframes blob-morph {
+            0% {
+                border-radius: 62% 38% 55% 45% / 45% 55% 45% 55%;
+            }
+
+            100% {
+                border-radius: 48% 52% 42% 58% / 55% 45% 58% 42%;
+            }
+        }
+
+        .hero-img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-img-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(150deg, rgba(58, 32, 18, 0.35), rgba(224, 138, 82, 0.25));
+            mix-blend-mode: color;
+            pointer-events: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-img-frame {
+                animation: none;
+            }
+        }
+
+        /* --- Stats (warm paper, light section) --- */
+        .stats-section {
+            padding: 6rem 6%;
+            background: var(--bg-paper);
+            color: var(--ink);
+        }
+
+        .stats-warm {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 3rem 1rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .stats-warm::before {
+            content: '';
+            position: absolute;
+            left: 8%;
+            right: 8%;
+            top: 50%;
+            border-top: 2px dashed rgba(43, 38, 32, 0.18);
+            z-index: 0;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .stats-warm::before {
+                display: block;
+            }
+        }
+
+        .stat-medallion {
+            width: clamp(150px, 19vw, 190px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid var(--warm-accent);
+            box-shadow: 0 14px 34px rgba(43, 38, 32, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .stat-medallion:nth-child(2) {
+            transform: translateY(-18px);
+        }
+
+        .stat-medallion:nth-child(3) {
+            transform: translateY(10px);
+        }
+
+        .stat-medallion h3 {
+            width: 100%;
+            font-size: clamp(1.15rem, 4vw, 2.1rem);
+            font-weight: 800;
+            color: var(--warm-accent-deep);
+            line-height: 1.1;
+            margin-bottom: 0.4rem;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .stat-medallion span {
+            width: 100%;
+        }
+
+        .stat-medallion span {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted-light);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* --- Marquee (terracotta, third tone) --- */
+        .marquee-section {
+            padding: 4rem 0 5rem;
+            background: var(--bg-terracotta);
+        }
+
+        .marquee-section .section-title {
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--text-on-dark);
+        }
+
+        .marquee {
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee-scroll 22s linear infinite;
+        }
+
+        .marquee-list {
+            display: flex;
+            gap: 2rem;
+            padding-inline: 1rem;
+            list-style: none;
+        }
+
+        @keyframes marquee-scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .marquee:hover .marquee-track,
+        .marquee-track:focus-within {
+            animation-play-state: paused;
+        }
+
+        .marquee-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .marquee-chip {
+            height: 68px;
+            min-width: 190px;
+            padding: 0 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            background: rgba(250, 243, 233, 0.06);
+            border: 1px solid rgba(224, 138, 82, 0.3);
+            border-radius: 50px;
+        }
+
+        .marquee-logo-placeholder {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            color: var(--text-on-dark);
+            font-size: 0.85rem;
+        }
+
+        .marquee-logo-placeholder i {
+            color: var(--warm-accent);
+        }
+
+        .marquee-caption {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--text-muted-dark);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .marquee-track {
+                animation: none;
+            }
+
+            .marquee-list[aria-hidden="true"] {
+                display: none;
+            }
+
+            .marquee {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scope-ribbon">Concepto 3 — <strong>Warm Human Precision</strong> — fragmento: hero / estadísticas /
+        marquesina</div>
+
+    <header class="hero">
+        <div class="hero-warm">
+            <div class="hero-text">
+                <span class="hero-name">Traumatólogo y Ortopedista</span>
+                <h1>Dr. Rodrigo Pérez Rodríguez</h1>
+                <p>Cirugía de columna, artroscopia y medicina deportiva. Tratamiento integral para el movimiento y la
+                    recuperación.</p>
+                <div class="hero-chips">
+                    <span class="hero-chip">Cirugía de Columna</span>
+                    <span class="hero-chip">Artroscopia</span>
+                    <span class="hero-chip">Medicina Deportiva</span>
+                </div>
+                <a href="#" class="btn-warm">Agenda Tu Consulta</a>
+            </div>
+            <div class="hero-portrait-wrap">
+                <div class="hero-img-frame">
+                    <img src="../assets/img/rodrigo-foto-portrait.webp" alt="Dr. Rodrigo Pérez Rodríguez">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="stats-section">
+        <div class="stats-warm">
+            <div class="stat-medallion">
+                <h3>10+</h3>
+                <span>Años de Experiencia Clínica</span>
+            </div>
+            <div class="stat-medallion">
+                <h3>+5,000</h3>
+                <span>Procedimientos Realizados</span>
+            </div>
+            <div class="stat-medallion">
+                <h3>Certificación</h3>
+                <span>Cédula y Consejo Vigentes</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="marquee-section">
+        <h2 class="section-title">Formación y Colaboraciones</h2>
+        <div class="marquee" role="group" aria-label="Instituciones y colaboraciones">
+            <div class="marquee-track">
+                <ul class="marquee-list">
+                    <li class="marquee-item">
+                        <div class="marquee-chip">
+                            <span class="marquee-logo-placeholder"><i class="fa-solid fa-graduation-cap"></i>
+                                UPAEP</span>
+                        </div>
+                        <span class="marquee-caption">Formación</span>
+                    </li>
+                    <li class="marquee-item">
+                        <div class="marquee-chip">
+                            <span class="marquee-logo-placeholder"><i class="fa-solid fa-staff-snake"></i>
+                                IMSS</span>
+                        </div>
+                        <span class="marquee-caption">Especialidad</span>
+                    </li>
+                    <li class="marquee-item">
+                        <div class="marquee-chip">
+                            <span class="marquee-logo-placeholder"><i class="fa-solid fa-calendar-check"></i>
+                                Doctoralia</span>
+                        </div>
+                        <span class="marquee-caption">Reservas Online</span>
+                    </li>
+                </ul>
+                <ul class="marquee-list" aria-hidden="true">
+                    <li class="marquee-item">
+                        <div class="marquee-chip">
+                            <span class="marquee-logo-placeholder"><i class="fa-solid fa-graduation-cap"></i>
+                                UPAEP</span>
+                        </div>
+                        <span class="marquee-caption">Formación</span>
+                    </li>
+                    <li class="marquee-item">
+                        <div class="marquee-chip">
+                            <span class="marquee-logo-placeholder"><i class="fa-solid fa-staff-snake"></i>
+                                IMSS</span>
+                        </div>
+                        <span class="marquee-caption">Especialidad</span>
+                    </li>
+                    <li class="marquee-item">
+                        <div class="marquee-chip">
+                            <span class="marquee-logo-placeholder"><i class="fa-solid fa-calendar-check"></i>
+                                Doctoralia</span>
+                        </div>
+                        <span class="marquee-caption">Reservas Online</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concepto 3b — Azul Humano</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-deep: #050a14;
+            --bg-paper: #f2f6fb;
+            --bg-black: #0a0d12;
+            --bg-band: #f7f9fb;
+            --ink: #10151f;
+            --text-on-dark: #f5f7fa;
+            --text-muted-dark: #99a3b3;
+            --text-muted-light: #5c6675;
+            --electric-blue: #3b82f6;
+            --electric-cyan: #06b6d4;
+            --accent-deep: #2563eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--bg-deep);
+            color: var(--text-on-dark);
+            overflow-x: hidden;
+        }
+
+        .scope-ribbon {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: var(--ink);
+            color: #9aa4b3;
+            text-align: center;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.6rem;
+        }
+
+        .scope-ribbon strong {
+            color: var(--electric-cyan);
+        }
+
+        /* --- Hero (dark navy) --- */
+        .hero {
+            min-height: 90vh;
+            padding: 6.5rem 6% 4rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: var(--bg-deep);
+        }
+
+        .hero-warm {
+            display: grid;
+            grid-template-areas: "portrait" "text";
+            gap: 3rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-warm {
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas: "text portrait";
+                align-items: center;
+                text-align: left;
+                gap: 4rem;
+            }
+
+            .hero-specialties {
+                justify-content: flex-start;
+            }
+        }
+
+        .hero-text {
+            grid-area: text;
+        }
+
+        .hero-name {
+            display: block;
+            font-size: 1rem;
+            color: var(--electric-cyan);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-weight: 600;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-text p {
+            color: var(--text-muted-dark);
+            font-size: 1.2rem;
+            max-width: 550px;
+            margin: 0 auto 1.75rem;
+            font-weight: 300;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-text p {
+                margin-left: 0;
+            }
+        }
+
+        /* Specialties — plain text row, no chip/pill treatment */
+        .hero-specialties {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--electric-cyan);
+        }
+
+        .hero-specialties .dot {
+            color: var(--text-muted-dark);
+            font-weight: 400;
+        }
+
+        .btn-warm {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent-deep), var(--electric-blue));
+            color: #fff;
+            padding: 17px 42px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-size: 0.88rem;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.35);
+        }
+
+        .hero-portrait-wrap {
+            grid-area: portrait;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-img-frame {
+            width: clamp(260px, 32vw, 420px);
+            aspect-ratio: 1 / 1;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(6, 182, 212, 0.55);
+            border-radius: 50%;
+            isolation: isolate;
+        }
+
+        .hero-img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* --- Stats (light blue-white paper) --- */
+        .stats-section {
+            padding: 3.5rem 6%;
+            background: var(--bg-paper);
+            color: var(--ink);
+        }
+
+        .stats-warm {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem 1rem;
+            position: relative;
+        }
+
+        .stats-warm::before {
+            content: '';
+            position: absolute;
+            left: 8%;
+            right: 8%;
+            top: 50%;
+            border-top: 2px dashed rgba(16, 21, 31, 0.15);
+            z-index: 0;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .stats-warm::before {
+                display: block;
+            }
+        }
+
+        .stat-medallion {
+            width: clamp(115px, 14vw, 145px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid var(--electric-cyan);
+            box-shadow: 0 14px 34px rgba(16, 21, 31, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            padding: 0.75rem;
+        }
+
+        .stat-medallion:nth-child(2) {
+            transform: translateY(-12px);
+        }
+
+        .stat-medallion:nth-child(3) {
+            transform: translateY(8px);
+        }
+
+        .stat-medallion h3 {
+            width: 100%;
+            font-size: clamp(0.95rem, 3vw, 1.6rem);
+            font-weight: 800;
+            color: var(--accent-deep);
+            line-height: 1.1;
+            margin-bottom: 0.3rem;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .stat-medallion span {
+            width: 100%;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted-light);
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        /* --- Photo / Story section (near-black, editorial, NOT logos) --- */
+        .story-section {
+            background: var(--bg-black);
+            padding: 5.5rem 6%;
+        }
+
+        .story-header {
+            max-width: 1300px;
+            margin: 0 auto 3.5rem;
+        }
+
+        .story-header .eyebrow {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--electric-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .story-header h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 700;
+            max-width: 20ch;
+        }
+
+        .story-list {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .story-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.75rem;
+            align-items: center;
+        }
+
+        @media (min-width: 900px) {
+            .story-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+
+            .story-row.reverse .story-photo {
+                order: 2;
+                margin-left: auto;
+            }
+
+            .story-row.reverse .story-copy {
+                order: 1;
+            }
+        }
+
+        .story-photo {
+            aspect-ratio: 3 / 4;
+            max-width: 420px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .story-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .story-copy .story-tag {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--electric-cyan);
+            margin-bottom: 0.75rem;
+        }
+
+        .story-copy h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.85rem;
+        }
+
+        .story-copy p {
+            color: var(--text-muted-dark);
+            font-size: 1rem;
+            line-height: 1.7;
+            font-weight: 300;
+            max-width: 46ch;
+        }
+
+        /* --- Logos band (separate, narrow, grayscale, no containers) --- */
+        .brands-band {
+            background: var(--bg-band);
+            padding: 2.25rem 0;
+            color: var(--ink);
+        }
+
+        .brands-band .band-label {
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .brands-marquee {
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+        }
+
+        .brands-track {
+            display: flex;
+            width: max-content;
+            animation: marquee-scroll 30s linear infinite;
+        }
+
+        .brands-list {
+            display: flex;
+            align-items: center;
+            gap: 5.5rem;
+            padding-inline: 2.75rem;
+            list-style: none;
+        }
+
+        @keyframes marquee-scroll {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .brands-marquee:hover .brands-track,
+        .brands-track:focus-within {
+            animation-play-state: paused;
+        }
+
+        /* Logo-first: the mark (icon placeholder today, <img> once real logos
+           land) is the dominant element; the caption is a small secondary label. */
+        .brand-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 44px;
+            gap: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            font-size: 1.15rem;
+            color: #333d4d;
+            filter: grayscale(1);
+            opacity: 0.65;
+            transition: opacity 0.3s, filter 0.3s, color 0.3s;
+        }
+
+        /* When real logos are uploaded to assets/img/brand-logos/, swap the
+           placeholder <i>+text inside .brand-mark for:
+           <img src="../assets/img/brand-logos/xxx.webp" alt="Xxx"
+                style="height:100%; width:auto; object-fit:contain;">
+           — same 44px-tall box, logo becomes the actual dominant element. */
+
+        .brand-item:hover .brand-mark {
+            filter: grayscale(0);
+            opacity: 1;
+            color: var(--accent-deep);
+        }
+
+        .brand-mark i {
+            font-size: 1.8rem;
+        }
+
+        .brand-caption {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted-light);
+            opacity: 0.8;
+        }
+
+        /* --- Scroll reveal --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: none;
+        }
+
+        .stats-warm .stat-medallion.reveal:nth-child(2) {
+            transition-delay: 0.12s;
+        }
+
+        .stats-warm .stat-medallion.reveal:nth-child(3) {
+            transition-delay: 0.24s;
+        }
+
+        /* Story rows slide in from the side the photo sits on */
+        .story-row.reveal {
+            transform: translateY(28px);
+        }
+
+        @media (min-width: 900px) {
+            .story-row.reveal {
+                transform: translateX(-40px) translateY(0);
+            }
+
+            .story-row.reverse.reveal {
+                transform: translateX(40px) translateY(0);
+            }
+
+            .story-row.reveal.in-view {
+                transform: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .brands-track {
+                animation: none;
+            }
+
+            .brands-list[aria-hidden="true"] {
+                display: none;
+            }
+
+            .brands-marquee {
+                overflow-x: auto;
+            }
+
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+
+            .stats-warm .stat-medallion.reveal:nth-child(2),
+            .stats-warm .stat-medallion.reveal:nth-child(3) {
+                transition-delay: 0s !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scope-ribbon">Concepto 3b — <strong>Azul Humano</strong> — fragmento: hero / estadísticas /
+        trayectoria / marcas</div>
+
+    <header class="hero">
+        <div class="hero-warm">
+            <div class="hero-text">
+                <span class="hero-name">Traumatólogo y Ortopedista</span>
+                <h1>Dr. Rodrigo Pérez Rodríguez</h1>
+                <p>Cirugía de columna, artroscopia y medicina deportiva. Tratamiento integral para el movimiento y la
+                    recuperación.</p>
+                <div class="hero-specialties">
+                    <span>Cirugía de Columna</span>
+                    <span class="dot">&middot;</span>
+                    <span>Artroscopia</span>
+                    <span class="dot">&middot;</span>
+                    <span>Medicina Deportiva</span>
+                </div>
+                <a href="#" class="btn-warm">Agenda Tu Consulta</a>
+            </div>
+            <div class="hero-portrait-wrap">
+                <div class="hero-img-frame">
+                    <img src="../assets/img/rodrigo-foto-portrait.webp" alt="Dr. Rodrigo Pérez Rodríguez">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="brands-band">
+        <div class="band-label">Formación y Colaboraciones</div>
+        <div class="brands-marquee" role="group" aria-label="Instituciones y colaboraciones">
+            <div class="brands-track">
+                <ul class="brands-list">
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i> UPAEP</span>
+                        <span class="brand-caption">Formación</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-staff-snake"></i> IMSS</span>
+                        <span class="brand-caption">Especialidad</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-calendar-check"></i> Doctoralia</span>
+                        <span class="brand-caption">Reservas Online</span>
+                    </li>
+                </ul>
+                <ul class="brands-list" aria-hidden="true">
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i> UPAEP</span>
+                        <span class="brand-caption">Formación</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-staff-snake"></i> IMSS</span>
+                        <span class="brand-caption">Especialidad</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-calendar-check"></i> Doctoralia</span>
+                        <span class="brand-caption">Reservas Online</span>
+                    </li>
+                </ul>
+                <ul class="brands-list" aria-hidden="true">
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i> UPAEP</span>
+                        <span class="brand-caption">Formación</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-staff-snake"></i> IMSS</span>
+                        <span class="brand-caption">Especialidad</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-calendar-check"></i> Doctoralia</span>
+                        <span class="brand-caption">Reservas Online</span>
+                    </li>
+                </ul>
+                <ul class="brands-list" aria-hidden="true">
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-graduation-cap"></i> UPAEP</span>
+                        <span class="brand-caption">Formación</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-staff-snake"></i> IMSS</span>
+                        <span class="brand-caption">Especialidad</span>
+                    </li>
+                    <li class="brand-item">
+                        <span class="brand-mark"><i class="fa-solid fa-calendar-check"></i> Doctoralia</span>
+                        <span class="brand-caption">Reservas Online</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="story-header reveal">
+            <span class="eyebrow">Trayectoria Profesional</span>
+            <h2>Formación clínica y académica en instituciones de referencia</h2>
+        </div>
+        <div class="story-list">
+            <div class="story-row reveal">
+                <div class="story-photo">
+                    <img src="../assets/img/story-upaep.webp" alt="Formación en UPAEP">
+                </div>
+                <div class="story-copy">
+                    <span class="story-tag">Formación · UPAEP</span>
+                    <h3>Alto Rendimiento Académico</h3>
+                    <p>Formación como parte del Grupo Piloto, programa selectivo con práctica clínica hospitalaria
+                        desde la etapa universitaria.</p>
+                </div>
+            </div>
+            <div class="story-row reverse reveal">
+                <div class="story-photo">
+                    <img src="../assets/img/story-imss.webp" alt="Especialidad en el IMSS">
+                </div>
+                <div class="story-copy">
+                    <span class="story-tag">Especialidad Médica · IMSS</span>
+                    <h3>Traumatología y Ortopedia</h3>
+                    <p>Formación especializada en el IMSS, con práctica clínica en diagnóstico y tratamiento de
+                        lesiones óseas y articulares.</p>
+                </div>
+            </div>
+            <div class="story-row reveal">
+                <div class="story-photo">
+                    <img src="../assets/img/story-catedra.webp" alt="Docencia en especialidad">
+                </div>
+                <div class="story-copy">
+                    <span class="story-tag">Catedrático</span>
+                    <h3>Docencia en Especialidad</h3>
+                    <p>Actividad académica como catedrático en el desarrollo de tesis dentro del programa de
+                        especialidad médica.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-warm">
+            <div class="stat-medallion reveal">
+                <h3 data-count-to="10" data-count-suffix="+">0</h3>
+                <span>Años de Experiencia Clínica</span>
+            </div>
+            <div class="stat-medallion reveal">
+                <h3 data-count-to="5000" data-count-prefix="+">0</h3>
+                <span>Procedimientos Realizados</span>
+            </div>
+            <div class="stat-medallion reveal">
+                <h3>Certificación</h3>
+                <span>Cédula y Consejo Vigentes</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function animateCount(el) {
+            const to = parseInt(el.dataset.countTo, 10);
+            const prefix = el.dataset.countPrefix || '';
+            const suffix = el.dataset.countSuffix || '';
+            if (reduceMotion) {
+                el.textContent = prefix + to.toLocaleString('es-MX') + suffix;
+                return;
+            }
+            const duration = 1400;
+            const start = performance.now();
+            function tick(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const value = Math.round(to * eased);
+                el.textContent = prefix + value.toLocaleString('es-MX') + suffix;
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    const counter = entry.target.querySelector('[data-count-to]');
+                    if (counter) animateCount(counter);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+            document.querySelectorAll('[data-count-to]').forEach(animateCount);
+        }
+    </script>
+</body>
+
+</html>
